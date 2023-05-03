@@ -1,12 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" /> 
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-  </body>
+<html>
+
+<head>
+  <title>React Test</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src='https://unpkg.com/babel-standalone@6.26.0/babel.js'></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+
+    const App = () => {
+      const [name, setName] = React.useState("");
+      const [age, setAge] = React.useState();
+
+      const Enter = (e) => {
+        e.preventDefault();
+      }
+
+      const onSubmit = (e) => {
+        e.preventDefault();
+        let target_name = document.querySelector("#name");
+        const data = $.get('https://api.agify.io?name=' + target_name.value, async function (data) {
+          await setAge(age => data.age);
+          setName(name => target_name.value);
+
+        });
+      }
+
+      return (
+        <div class="container">
+          <Header></Header>
+          <form onSubmit>
+            <input id="name" placeholder='Enter Name' onSubmit={Enter} required></input>
+            <br></br>
+            <button onClick={onSubmit} type="submit" form="form">Search </button>
+          </form>
+          <Output name={name} age={age}></Output>
+        </div>
+      );
+    }
+
+    class Header extends React.Component {
+      render() {
+        return (
+          <h1> Age Guesser </h1>
+        );
+      }
+    }
+
+    function Output(props) {
+        return (
+          <div class="item">
+            <h3>Your name: {props.name} </h3>
+            <h3>Your age: {props.age} </h3>
+          </div>
+        );
+      }
+    ReactDOM.render(<App />, document.querySelector('#root'));
+  </script>
+
+</body>
+
 </html>
