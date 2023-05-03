@@ -1,0 +1,27 @@
+
+* {
+    border: solid red 1px;
+}
+
+.container{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+}
+
+
+.item {
+    flex: 1 0 auto;
+}
+
+form {
+    display: flex;
+    width: 200px;
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
